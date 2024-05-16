@@ -11,7 +11,13 @@ const asar = require('asar');
 const argv = yargs
     .positional('file', {
         alias: 'f',
-        describe: 'file to load',
+        describe: 'markdown file to load',
+        type: 'string',
+        default: "",
+    })
+    .positional('tmpl', {
+        alias: 't',
+        describe: 'template index.html',
         type: 'string',
         default: "",
     })
@@ -60,45 +66,54 @@ function createWindow(file) {
     });
 }
 
+const defaultTmpl = `
+    <!doctype html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            <title>slidev</title>
+            <link rel="stylesheet" href="dist/reset.css">
+            <link rel="stylesheet" href="dist/reveal.css">
+            <link rel="stylesheet" href="dist/theme/black.css">
+            <link rel="stylesheet" href="plugin/highlight/monokai.css">
+        </head>
+        <body>
+            <div class="reveal">
+                <div class="slides">
+                    <section data-markdown data-separator="^---" data-separator-vertical="^--">
+                        <textarea data-template>
+                            {{markdownContent}}
+                        </textarea>
+                    </section>
+                </div>
+            </div>
+            <script src="dist/reveal.js"></script>
+            <script src="plugin/notes/notes.js"></script>
+            <script src="plugin/markdown/markdown.js"></script>
+            <script src="plugin/highlight/highlight.js"></script>
+            <script>
+                Reveal.initialize({
+                    hash: true,
+                    plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+                });
+            </script>
+        </body>
+    </html>
+`;
+
+
 function generateHTMLFromMarkdown(markdownFile, outputPath) {
     try {
-        const markdownContent = fs.readFileSync(markdownFile, 'utf8');
+        let markdownContent = fs.readFileSync(markdownFile, 'utf8');
 
-        const htmlString = `
-            <!doctype html>
-            <html lang="en">
-                <head>
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-                    <title>slidev</title>
-                    <link rel="stylesheet" href="dist/reset.css">
-                    <link rel="stylesheet" href="dist/reveal.css">
-                    <link rel="stylesheet" href="dist/theme/black.css">
-                    <link rel="stylesheet" href="plugin/highlight/monokai.css">
-                </head>
-                <body>
-                    <div class="reveal">
-                        <div class="slides">
-                            <section data-markdown data-separator="^---" data-separator-vertical="^--">
-                                <textarea data-template>
-                                    ${markdownContent}
-                                </textarea>
-                            </section>
-                        </div>
-                    </div>
-                    <script src="dist/reveal.js"></script>
-                    <script src="plugin/notes/notes.js"></script>
-                    <script src="plugin/markdown/markdown.js"></script>
-                    <script src="plugin/highlight/highlight.js"></script>
-                    <script>
-                        Reveal.initialize({
-                            hash: true,
-                            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
-                        });
-                    </script>
-                </body>
-            </html>
-        `;
+        let tmpl = defaultTmpl
+
+        if (argv.tmpl !== "") {
+            tmpl = fs.readFileSync(path.resolve(argv.tmpl), 'utf8');
+        }
+
+        let htmlString = tmpl.replace('{{markdownContent}}', markdownContent);
 
         fs.writeFileSync(outputPath, htmlString);
     } catch (error) {
