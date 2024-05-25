@@ -9,5 +9,5 @@ slidev demo.md
 
 ## build
 ```
-npx electron-builder build --win nsis
+npm run dist:win
 ```

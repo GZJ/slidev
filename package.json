@@ -4,7 +4,8 @@
   "description": "A simple wrapper for reveal.js.",
   "main": "main.js",
   "scripts": {
-    "test": "electron ."
+    "test": "electron .",
+    "dist:win": "npx electron-builder build --win nsis"
   },
   "author": "gzj",
   "license": "ISC",
