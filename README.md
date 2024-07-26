@@ -5,6 +5,7 @@ Slidev is a simple wrapper for reveal.js.
 ## quickstart
 ```
 slidev demo.md
+slidev demo.md --width 1000 --height 1000 --x 0 -y 0
 ```
 
 ## build
