@@ -9,5 +9,6 @@ slidev demo.md
 
 ## build
 ```
+npm install
 npm run dist:win
 ```
