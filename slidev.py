@@ -85,7 +85,7 @@ def main():
                         help='Optional custom HTML template')
     parser.add_argument('-w', '--width', type=int, default=800, 
                         help='Window width')
-    parser.add_argument('-H', '--height', type=int, default=600, 
+    parser.add_argument('-h', '--height', type=int, default=600, 
                         help='Window height')
     parser.add_argument('-x', type=int, default=0, 
                         help='Window x position')
