@@ -79,7 +79,7 @@ def generate_html_from_markdown(markdown_file, output_index_path, template=None)
         f.write(html_content)
 
 def main():
-    parser = argparse.ArgumentParser(description='Create a presentation from markdown using webview')
+    parser = argparse.ArgumentParser(description='Create a presentation from markdown using webview', add_help=False)
     parser.add_argument('file', help='Markdown file to load')
     parser.add_argument('-t', '--tmpl', default=None, 
                         help='Optional custom HTML template')
@@ -91,6 +91,8 @@ def main():
                         help='Window x position')
     parser.add_argument('-y', type=int, default=0, 
                         help='Window y position')
+    parser.add_argument('--help', action='help', default=argparse.SUPPRESS, 
+                        help='Show this help message and exit')
     
     args = parser.parse_args()
     
