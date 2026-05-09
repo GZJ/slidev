@@ -1,0 +1,17 @@
+{
+  "name": "slidev-frontend",
+  "version": "1.0.0",
+  "description": "Frontend asset pipeline for slidev",
+  "scripts": {
+    "build": "node scripts/sync-assets.mjs",
+    "clean": "rm -rf ../src/slidev/assets/reveal"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "reveal.js": "^6.0.1"
+  },
+  "private": true
+}

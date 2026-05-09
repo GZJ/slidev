@@ -1,0 +1,18 @@
+[project]
+name = "slidev"
+version = "0.1.0"
+description = "Python wrapper for reveal.js presentations"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pyside6>=6.7 ; sys_platform == 'linux'",
+    "pywebview>=6.2.1",
+    "qtpy>=2.4.3 ; sys_platform == 'linux'",
+]
+
+[project.scripts]
+slidev = "slidev:main"
+
+[build-system]
+requires = ["uv_build>=0.9.26,<0.10.0"]
+build-backend = "uv_build"
